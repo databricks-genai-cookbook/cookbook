@@ -1,0 +1,25 @@
+- title: Streaming Outputs with the Foundation Model API
+  path: nbs/streaming_outputs.ipynb
+  date: 2024-02-02
+  authors:
+    - Daniel Liden
+  tags:
+    - completions
+
+- title: Using Databricks Vector Search with the Foundation Model API
+  path: nbs/vector_search_fm_api.ipynb
+  date: 2024-02-02
+  authors:
+    - Daniel Liden
+  tags:
+    - rag
+    - embeddings
+    - vector search
+
+- title: Querying the Foundation Model API with the OpenAI Python SDK
+  path: nbs/fm_api_openai_sdk.ipynb
+  date: 2024-02-02
+  authors:
+    - Daniel Liden
+  tags:
+    - completions
