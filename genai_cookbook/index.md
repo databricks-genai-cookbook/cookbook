@@ -24,13 +24,13 @@ Use the Foundation Model API to generate embeddings for Databricks Vector Search
 :link-type: doc
 :class-header: bg-light
 
-Foundation Model API via the OpenAI Python SDK
+Using the MLflow Prompt Engineering UI
 ^^^
-Quickly test open source foundation models in existing codebases that currently use OpenAI models via the OpenAI Python client.
+Quickly compare Foundation Model API models and prompts using the MLflow Prompt Engineering UI.
 :::
 
 :::{grid-item-card}
-:link: nbs/streaming_outputs
+:link: nbs/fm_api_mlflow_prompt_eng
 :link-type: doc
 :class-header: bg-light
 
