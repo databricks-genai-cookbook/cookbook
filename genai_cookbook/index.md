@@ -20,7 +20,7 @@ Use the Foundation Model API to generate embeddings for Databricks Vector Search
 :::
 
 :::{grid-item-card}
-:link: nbs/fm_api_openai_sdk
+:link: nbs/fm_api_mlflow_prompt_eng
 :link-type: doc
 :class-header: bg-light
 
@@ -30,7 +30,7 @@ Quickly compare Foundation Model API models and prompts using the MLflow Prompt 
 :::
 
 :::{grid-item-card}
-:link: nbs/fm_api_mlflow_prompt_eng
+:link: nbs/streaming_outputs
 :link-type: doc
 :class-header: bg-light
 
