@@ -2,7 +2,9 @@
 title: Databricks Generative AI Cookbook
 ---
 
-# Databricks Generative AI Cookbook
+# Databricks Mosaic Generative AI Cookbook
+
+The Databricks Mosaic Generative AI Cookbook is a collection of notebooks demonstrating different use cases for Databricks Mosaic GenAI tools such as the Foundation Model API and the Model Playground.
 
 ## Featured Notebooks
 
@@ -40,6 +42,12 @@ Generate streaming outputs with the Python SDK and the REST API.
 :::
 
 ::::
+
+## Official Documentation
+- [Foundation Model APIs](https://docs.databricks.com/en/machine-learning/foundation-models/index.html)
+- [AI Playground](https://docs.databricks.com/en/large-language-models/ai-playground.html)
+- [Vector Search](https://docs.databricks.com/en/generative-ai/vector-search.html)
+- [AI Functions](https://docs.databricks.com/en/large-language-models/ai-functions.html)
 
 
 ```{tableofcontents}
