@@ -40,8 +40,15 @@ Generate Streaming Outputs
 ^^^
 Generate streaming outputs with the Python SDK and the REST API.
 :::
-
 ::::
+
+## How to Run These Notebooks in your Databricks Workspace
+
+If you want to run one of these notebooks in your Databricks workspace, click the download icon in the upper right corner of the page you would like to run. Then right-click on `.ipynb` and select "Copy link address." In your Databricks workspace, in the workspace view, select "import" (from the three-dots menu or from the right-click menu) and paste in the url you copied. This will import the notebook to your Databricks workspace.
+
+![Image](./images/index/import_notebook.png)
+
+
 
 ## Official Documentation
 - [Foundation Model APIs](https://docs.databricks.com/en/machine-learning/foundation-models/index.html)
