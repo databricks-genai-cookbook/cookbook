@@ -22,6 +22,7 @@ html:
   use_issues_button: true
   use_repository_button: true
   home_page_in_navbar: false
+  google_analytics_id: G-6BZ4NTBHVJ
 sphinx:
   config:
     html_show_copyright: false
