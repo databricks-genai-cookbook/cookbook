@@ -10,19 +10,10 @@ logo: logo2.png
 execute:
   execute_notebooks: 'off'
 
-# Define the name of the latex output file for PDF builds
-latex:
-  latex_documents:
-    targetname: book.tex
-
-# Add a bibtex file so that we can create citations
-# bibtex_bibfiles:
-#   - references.bib
-
 # Information about where the book exists on the web
 repository:
-  url: https://github.com/djliden/cookbook-test
-  path_to_book: site  # Optional path to your book, relative to the repository root
+  url: https://github.com/databricks-genai-cookbook/cookbook/
+  path_to_book: ./genai_cookbook  # Optional path to your book, relative to the repository root
   branch: main  # Which branch of the repository should be used when creating links (optional)
 
 # Add GitHub buttons to your book
