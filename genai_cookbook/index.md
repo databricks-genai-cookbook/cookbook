@@ -2,9 +2,9 @@
 title: Databricks Generative AI Cookbook
 ---
 
-# Databricks Mosaic Generative AI Cookbook
+# Databricks Mosaic AI <br> Generative AI Cookbook
 
-The Databricks Mosaic Generative AI Cookbook is a collection of notebooks demonstrating different use cases for Databricks Mosaic GenAI tools such as the Foundation Model API and the Model Playground.
+The Generative AI Cookbook is a collection of notebooks demonstrating different use cases for Databricks Mosaic AI tools such as the Foundation Model API and the Model Playground.
 
 ## Featured Notebooks
 
