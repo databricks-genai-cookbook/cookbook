@@ -4,7 +4,32 @@ title: Databricks Generative AI Cookbook
 
 # Databricks Mosaic Generative AI Cookbook
 
-The Databricks Mosaic Generative AI Cookbook is a collection of notebooks demonstrating different use cases for Databricks Mosaic GenAI tools such as the Foundation Model API and the Model Playground.
+## RAG Guide
+Follow this guide to learn how RAG works, the required components of a production-ready, high-quality RAG application, and Databricks’ recommended developer workflow for delivering a high-quality RAG application that uses unstructured data.  
+
+This guide assumes you have selected a use case that requires unstructured docs RAG.
+
+This guide is broken into 5 main sections:
+
+1. Introduction to retrieval-augmented generation (RAG)
+   a. Overview of the RAG technique 
+   b. Key benefits of using RAG
+   c. Types of RAG
+2. Fundamentals of RAG over Unstructured Documents 
+   a. Understanding retrieval
+   b. Components of a RAG application
+3. Deep dive into RAG over Unstructured Documents
+   a. Deep dive into the components of a RAG application
+4. How to evaluate RAG applications
+   a. Metrics to measure quality / cost / latency
+   b. Developing an evaluation set to measure quality
+   c. Infrastructure required to evaluate RAG apps
+5. Practical hands-on guide to implementing high-quality RAG
+   a. Databricks recommended developer workflow for building a RAG application 
+   b. How to iteratively improve the application's quality
+   c. Throughout, this section is supported by ready-to-use code examples
+
+If you are less familiar with RAG, we suggest starting with section 1. If you are already familiar with RAG or simply want to get started quickly, start with section 5.  Section 5 refers back to the previous sections as needed to explain concepts.
 
 ## Featured Notebooks
 
@@ -12,54 +37,35 @@ The Databricks Mosaic Generative AI Cookbook is a collection of notebooks demons
 :class-container: text-center
 
 :::{grid-item-card}
-:link: nbs/vector_search_fm_api
+:link: /nbs/1-introduction-to-rag
 :link-type: doc
 :class-header: bg-light
 
-Embeddings for Vector Search
+Section 1: Introduction to retrieval-augmented generation (RAG)
 ^^^
-Use the Foundation Model API to generate embeddings for Databricks Vector Search.
+Learn the basic concepts of retrieval-augmented generation (RAG) in this introdoctory notebook.
 :::
 
 :::{grid-item-card}
-:link: nbs/fm_api_openai_sdk
+:link: link
 :link-type: doc
 :class-header: bg-light
 
-Use the Foundation Model API with the OpenAI Python SDK
+Title
 ^^^
-Convert your OpenAI Python code to use the Foundation Model API with minimal code changes.
+Description
 :::
 
 :::{grid-item-card}
-:link: nbs/streaming_outputs
+:link: link
 :link-type: doc
 :class-header: bg-light
 
-Generate Streaming Outputs
+Title
 ^^^
-Generate streaming outputs with the Python SDK and the REST API.
+Another section
 :::
 ::::
-
-## How to Run These Notebooks in your Databricks Workspace
-
-### Import individual notebooks
-
-If you want to run one of these notebooks in your Databricks workspace, click the download icon in the upper right corner of the page you would like to run. Then right-click on `.ipynb` and select "Copy link address." In your Databricks workspace, in the workspace view, select "import" (from the three-dots menu or from the right-click menu) and paste in the url you copied. This will import the notebook to your Databricks workspace.
-
-![Image](./images/index/import_notebook.png)
-
-### Clone the repository
-
-You can also clone the whole repository into your workspace. Simply navigate to "Repos" in your Databricks workspace, click "Add Repo", and copy in the URL: [https://github.com/databricks-genai-cookbook/cookbook](https://github.com/databricks-genai-cookbook/cookbook). Then click Create Repo. This will clone the repository to your workspace, giving you access to all of the notebooks right in your Databricks workspace.
-
-## Official Documentation
-- [Foundation Model APIs](https://docs.databricks.com/en/machine-learning/foundation-models/index.html)
-- [AI Playground](https://docs.databricks.com/en/large-language-models/ai-playground.html)
-- [Vector Search](https://docs.databricks.com/en/generative-ai/vector-search.html)
-- [AI Functions](https://docs.databricks.com/en/large-language-models/ai-functions.html)
-
 
 ```{tableofcontents}
 ```
