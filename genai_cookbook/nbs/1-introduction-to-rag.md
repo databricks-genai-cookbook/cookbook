@@ -24,7 +24,12 @@ In the simplest form of a RAG application, the following happens:
 
 3. **Generation:** The resulting **prompt** is passed to the LLM, and the LLM generates a response to the **user's request**.
 
-![](media/image6.png)
+```{image} ../images/1-introduction-to-rag/1_img.png
+:alt: RAG process
+:align: center
+```
+
+<br>
 
 This is a simplified overview of the RAG process, but it's important to note that implementing a RAG application involves a number of complex tasks. Preprocessing source data to make it suitable for use in RAG, effectively retrieving data, formatting the augmented prompt, and evaluating the generated responses all require careful consideration and effort. These topics will be covered in greater detail in later sections of this guide.
 
