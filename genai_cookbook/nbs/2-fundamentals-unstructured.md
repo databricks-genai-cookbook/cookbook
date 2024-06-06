@@ -22,11 +22,11 @@ Throughout this guide we will focus on preparing unstructured data for use in RA
 
 Unstructured data lacks a predefined data model or schema, making it impossible to query on the basis of structure and metadata alone. As a result, unstructured data requires techniques that can understand and extract semantic meaning from raw text, images, audio, or other content.
 
-During data preparation, the RAG application's data pipeline takes raw unstructured data and transforms it into discrete chunks that can be queried based on their relevance to a user's query. The key steps in data preprocessing are outlined below. Each step has a variety of knobs that can be tuned - for a deeper dive discussion on these knobs, please refer to the [deep dive into RAG section.](#section-3-deep-dive-into-rag-over-unstructured-documents)
+During data preparation, the RAG application's data pipeline takes raw unstructured data and transforms it into discrete chunks that can be queried based on their relevance to a user's query. The key steps in data preprocessing are outlined below. Each step has a variety of knobs that can be tuned - for a deeper dive discussion on these knobs, please refer to the [deep dive into RAG section.](/nbs/3-deep-dive)
 
 In the remainder of this section, we describe the process of preparing unstructured data for retrieval using *semantic search*. Semantic search understands the contextual meaning and intent of a user query to provide more relevant search results.
 
-Semantic search is one of several approaches that can be taken when implementing the retrieval component of a RAG application over unstructured data. We cover alternate retrieval strategies in the [retrieval deep dive section](https://docs.google.com/document/d/1Ay4BiYKcioj-p4UXdUCTIHUYFiCL9xHAFfjtlwPw1rI/edit#heading=h.9rcwykxac8cn).
+Semantic search is one of several approaches that can be taken when implementing the retrieval component of a RAG application over unstructured data. We cover alternate retrieval strategies in the [retrieval deep dive section](/nbs/3-deep-dive).
 
 ```{image} ../images/2-fundamentals-unstructured/2_img.png
 :align: center
@@ -88,6 +88,6 @@ Evaluation and monitoring the quality, cost and latency requires several compone
 
 - **Collecting stakeholder feedback:** As a developer, you may not be a domain expert in the content of the application you are developing. In order to collect feedback from human experts who can assess your application quality, you need an interface that allows them to interact with the application and provide detailed feedback.
 
-We will cover evaluation in much more detail in [Section 4: Evaluation](#section-4-evaluation).
+We will cover evaluation in much more detail in [Section 4: Evaluation](nbs/4-evaluation).
 
-The [next section](#section-3-deep-dive-into-rag-over-unstructured-documents) of this guide will unpack the finer details of the typical components that make up the data pipeline and RAG chain of a RAG application using unstructured data.
+The [next section](/nbs/3-deep-dive) of this guide will unpack the finer details of the typical components that make up the data pipeline and RAG chain of a RAG application using unstructured data.
