@@ -57,13 +57,13 @@ Introduction to the key components and principles of developing RAG applications
 :::
 
 :::{grid-item-card}
-:link: link
+:link: /nbs/3-deep-dive
 :link-type: doc
 :class-header: bg-light
 
-Title
+Section 3: Deep dive into RAG over unstructured documents
 ^^^
-Another section
+A more detailed guide to refining each component of a RAG application over unstructured data.
 :::
 ::::
 
