@@ -125,7 +125,7 @@ Consider creating an inventory table to consolidate this information, for exampl
 - P0 What metrics should be used to assess the quality of generated responses? 
   - Note: Databricks Quality Lab provides a recommended set of metrics to yo use
 - P1 What is the set of questions the RAG app must be good at to go to production?
-- P1 Does an [evaluation set](#establishing-ground-truth-creating-evaluation-sets) exist? Is it possible to get an evaluation set of user queries, along with ground-truth answers and (optionally) the correct supporting documents that should be retrieved?
+- P1 Does an [evaluation set](/nbs/4-evaluation.md#establishing-ground-truth-creating-evaluation-sets) exist? Is it possible to get an evaluation set of user queries, along with ground-truth answers and (optionally) the correct supporting documents that should be retrieved?
 - P1 How will user feedback be collected and incorporated into the system?
 
 #### Security
@@ -269,9 +269,9 @@ Parameters and their default values that are configured in `00_config`.
 
 | Knob                                     | Description                                                                                                                               | Default value                                                                                                                                |
 |------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
-| [Parsing strategy](#parsing)             | Extracting relevant information from the raw data using appropriate parsing techniques                                                     | Varies based on document type, but generally an open source parsing library                                                                  |
-| [Chunking strategy](#chunking)           | Breaking down the parsed data into smaller, manageable chunks for efficient retrieval                                                     | Token Text Splitter, which splits text along using a chunk size of 4000 tokens and a stride of 500 tokens.                                    |
-| [Embedding model](#embedding-model)      | Converting the chunked text data into a numerical vector representation that captures its semantic meaning                                 | GTE-Large-v1.5 on the Databricks FMAPI pay-per-token                                                                                         |
+| [Parsing strategy](/nbs/3-deep-dive.md#parsing)             | Extracting relevant information from the raw data using appropriate parsing techniques                                                     | Varies based on document type, but generally an open source parsing library                                                                  |
+| [Chunking strategy](/nbs/3-deep-dive.md#chunking)           | Breaking down the parsed data into smaller, manageable chunks for efficient retrieval                                                     | Token Text Splitter, which splits text along using a chunk size of 4000 tokens and a stride of 500 tokens.                                    |
+| [Embedding model](/nbs/3-deep-dive.md#embedding-model)      | Converting the chunked text data into a numerical vector representation that captures its semantic meaning                                 | GTE-Large-v1.5 on the Databricks FMAPI pay-per-token                                                                                         |
 
 #### 4. Deploy the POC chain to the Quality Lab Review App
 
@@ -279,7 +279,7 @@ The POC chain is a RAG chain that provides a default implementation of the param
 
 > Note: The POC Chain uses MLflow code-based logging. To understand more about code-based logging, [link to docs].
 
-1. Open the 03_deploy_poc_to_review_app Notebook
+1. Open the `03_deploy_poc_to_review_app` Notebook
 
 2. Run each cell of the Notebook.
 
@@ -332,11 +332,11 @@ Parameters and their default values configured in 00_config:
 
 | Knob | Description | Default value |
 |------|-------------|---------------|
-| [Query understanding](#query-understanding) | Analyzing and transforming user queries to better represent intent and extract relevant information, such as filters or keywords, to improve the retrieval process. | None, the provided query is directly embedded. |
-| [Retrieval](#retrieval) | Finding the most relevant chunks of information given a retrieval query. In the unstructured data case, this typically involves one or a combination of semantic or keyword-based search. | Semantic search with K = 5 chunks retrieved |
-| [Prompt augmentation](#prompt-augmentation) | Combining a user query with retrieved information and instructions to guide the LLM towards generating high-quality responses. | A simple RAG prompt template |
-| [LLM](#llm) | Selecting the most appropriate model (and model parameters) for your application to optimize/balance performance, latency, and cost. | Databricks-dbrx-instruct hosted using Databricks FMAPI pay-per-token |
-| [Post processing & guardrails](#post-processing-guardrails) | Applying additional processing steps and safety measures to ensure the LLM-generated responses are on-topic, factually consistent, and adhere to specific guidelines or constraints. | None |
+| [Query understanding](/nbs/3-deep-dive.md#query-understanding) | Analyzing and transforming user queries to better represent intent and extract relevant information, such as filters or keywords, to improve the retrieval process. | None, the provided query is directly embedded. |
+| [Retrieval](/nbs/3-deep-dive.md#retrieval) | Finding the most relevant chunks of information given a retrieval query. In the unstructured data case, this typically involves one or a combination of semantic or keyword-based search. | Semantic search with K = 5 chunks retrieved |
+| [Prompt augmentation](/nbs/3-deep-dive.md#prompt-augmentation) | Combining a user query with retrieved information and instructions to guide the LLM towards generating high-quality responses. | A simple RAG prompt template |
+| [LLM](/nbs/3-deep-dive.md#llm) | Selecting the most appropriate model (and model parameters) for your application to optimize/balance performance, latency, and cost. | Databricks-dbrx-instruct hosted using Databricks FMAPI pay-per-token |
+| [Post processing & guardrails](/nbs/3-deep-dive.md#post-processing-guardrails) | Applying additional processing steps and safety measures to ensure the LLM-generated responses are on-topic, factually consistent, and adhere to specific guidelines or constraints. | None |
 
 #### 5. Share the Review App with stakeholders
 
@@ -365,7 +365,7 @@ Now that your stakeholders have used your POC, we can use their feedback to meas
 
 #### 1. ETL the logs to an Evaluation Set & run evaluation
 
-1. Open the 04_evaluate_poc_quality Notebook.
+1. Open the `04_evaluate_poc_quality` Notebook.
 
 2. Adjust the configuration at the top to point to your Review App's logs.
 
@@ -438,7 +438,7 @@ From a conceptual point of view, it's helpful to view RAG quality issues through
 
 From an implementation standpoint, we can divide our RAG solution into two components which can be iterated on to address quality challenges:
 
-[**Data pipeline**](#data-pipeline-1)
+[**Data pipeline**](/nbs/3-deep-dive.md#data-pipeline-1)
 
 ```{image} ../images/5-hands-on/15_img.png
 :align: center
@@ -450,7 +450,7 @@ From an implementation standpoint, we can divide our RAG solution into two compo
 - What metadata (e.g., section title, document title) is extracted about each document/chunk? How is this metadata included (or not included) in each chunk?
 - Which embedding model is used to convert text into vector representations for similarity search
 
-[**RAG chain**](#rag-chain)
+[**RAG chain**](/nbs/3-deep-dive.md#rag-chain)
 
 ```{image} ../images/5-hands-on/16_img.png
 :align: center
@@ -473,7 +473,7 @@ This overlap underscores the need for a holistic approach to RAG quality improve
 
 Retrieval quality is arguably the most important component of a RAG application. If the most relevant chunks are not returned for a given query, the LLM will not have access to the necessary information to generate a high-quality response. Poor retrieval can thus lead to irrelevant, incomplete, or hallucinated output.
 
-As discussed in [Section 4: Evaluation](#section-4-evaluation), metrics such as precision and recall can be calculated using a set of evaluation queries and corresponding ground-truth chunks/documents. If evaluation results indicate that relevant chunks are not being returned, you will need to investigate further to identify the root cause. This step requires manual effort to analyze the underlying data. With Mosaic AI, this becomes considerably easier given the tight integration between the data platform (Unity Catalog and Vector Search), and experiment tracking (MLflow LLM evaluation and MLflow tracing).
+As discussed in [Section 4: Evaluation](/nbs/4-evaluation), metrics such as precision and recall can be calculated using a set of evaluation queries and corresponding ground-truth chunks/documents. If evaluation results indicate that relevant chunks are not being returned, you will need to investigate further to identify the root cause. This step requires manual effort to analyze the underlying data. With Mosaic AI, this becomes considerably easier given the tight integration between the data platform (Unity Catalog and Vector Search), and experiment tracking (MLflow LLM evaluation and MLflow tracing).
 
 Here's a step-by-step process to address **retrieval quality** issues:
 
@@ -533,7 +533,7 @@ The following is a step-by-step process to address **generation quality** issues
 
 5. Implement the proposed fix for the most promising or impactful root cause. This may involve modifying the RAG chain (e.g., adjusting the prompt template, trying a different LLM) or the data pipeline (e.g., adjusting the chunking strategy to provide more context).
 
-6. Re-run evals on the updated system and compare generation quality metrics to the previous version. If there is significant improvement, consider deploying the updated RAG application for further testing with end-users (see the [Deployment](https://docs.google.com/document/d/1-kTa8oYrkXbl5zAnwjmezqi11DtZrGQbGpMTGIZvcC4/edit#heading=h.v9fuf99cxn) section).
+6. Re-run evals on the updated system and compare generation quality metrics to the previous version. If there is significant improvement, consider deploying the updated RAG application for further testing with end-users (see the [Deployment](#deployment) section).
 
 7. If the generation quality is still not satisfactory, repeat steps 4-6 for the next most promising fix until the desired performance is achieved.
 
@@ -619,11 +619,11 @@ Once you have identified a potential fix based on the debugging process outlined
 | | [Chunking](https://github.com/databricks-field-eng/field-ai-examples/blob/main/dev/data_processing/notebook_version/data_prep/03_chunk_docs.py) | - Chunking strategy<br>  - [Add or update existing chunking strategy](https://github.com/databricks-field-eng/field-ai-examples/blob/main/dev/data_processing/notebook_version/data_prep/chunker_library.py)<br>  - [Update data pipeline config](https://github.com/databricks-field-eng/field-ai-examples/blob/main/dev/data_processing/notebook_version/data_prep/00_config.py#L30-L35)<br>- Change chunk sizes of existing chunking strategy<br>  - [Update data pipeline config](https://github.com/databricks-field-eng/field-ai-examples/blob/main/dev/data_processing/notebook_version/data_prep/00_config.py#L30-L35)<br>- Add metadata to chunks<br>- Semantic chunking |
 | | [Embedding<br>model](https://github.com/databricks-field-eng/field-ai-examples/blob/main/dev/data_processing/notebook_version/data_prep/04_vector_index.py#L41) | - Change embedding model<br>  - [Update data pipeline config](https://github.com/databricks-field-eng/field-ai-examples/blob/main/dev/data_processing/notebook_version/data_prep/00_config.py#L18-L24) |
 | **RAG chain config changes**<br><br>1. If no changes to data pipeline, do *not* re-run data pipeline<br>2. Log new version of RAG chain using the updated index<br>3. Run evals on new chain | [LLM](#llm) | - Change LLM or its parameters<br>  - [Update RAG chain config](https://github.com/epec254/rag_code/blob/main/RAG%20Cookbook/B_pdf_rag_with_multi_turn_chat/2_rag_chain_config.yaml#L1-L4) |
-| | [Prompt<br>Template](#prompt-augmentation) | - Iterate on prompt template<br>  - [Update RAG chain config](https://github.com/epec254/rag_code/blob/main/RAG%20Cookbook/B_pdf_rag_with_multi_turn_chat/2_rag_chain_config.yaml#L5-L14) |
-| | [Hybrid search](#retrieval) | - Try hybrid search instead of semantic search<br>  - Update RAG chain code |
-| **RAG chain code changes**<br><br>1. If no changes to data pipeline, *do not* re-run data pipeline<br>2. Log new version of RAG chain using the updated index<br>3. Run evals on new chain | [Reranker](#retrieval) | - Add reranker step to RAG chain<br>  - [Update RAG chain code](https://github.com/epec254/rag_code/pull/19) |
-| | [Query<br>Expansion](#query-understanding) | - Add query expansion step<br>  - Update RAG chain code<br>  - NOTE: Implement this [example prompt](https://docs.llamaindex.ai/en/stable/examples/query_transformations/query_transform_cookbook/#query-rewriting-custom) into the multi turn |
-| | [Guardrails](#post-processing-guardrails) | - Add post-processing guardrails step to RAG chain<br>  - Create a version of this [chain](https://github.com/epec254/rag_code/tree/main/RAG%20Cookbook/B_pdf_rag_with_multi_turn_chat) that includes a sample guardrail prompt using the current advanced DBdemo as an example |
+| | [Prompt<br>Template](/nbs/3-deep-dive.md#prompt-augmentation) | - Iterate on prompt template<br>  - [Update RAG chain config](https://github.com/epec254/rag_code/blob/main/RAG%20Cookbook/B_pdf_rag_with_multi_turn_chat/2_rag_chain_config.yaml#L5-L14) |
+| | [Hybrid search](/nbs/3-deep-dive.md#retrieval) | - Try hybrid search instead of semantic search<br>  - Update RAG chain code |
+| **RAG chain code changes**<br><br>1. If no changes to data pipeline, *do not* re-run data pipeline<br>2. Log new version of RAG chain using the updated index<br>3. Run evals on new chain | [Reranker](/nbs/3-deep-dive.md#retrieval) | - Add reranker step to RAG chain<br>  - [Update RAG chain code](https://github.com/epec254/rag_code/pull/19) |
+| | [Query<br>Expansion](/nbs/3-deep-dive.md#query-understanding) | - Add query expansion step<br>  - Update RAG chain code<br>  - NOTE: Implement this [example prompt](https://docs.llamaindex.ai/en/stable/examples/query_transformations/query_transform_cookbook/#query-rewriting-custom) into the multi turn |
+| | [Guardrails](/nbs/3-deep-dive.md#post-processing-guardrails) | - Add post-processing guardrails step to RAG chain<br>  - Create a version of this [chain](https://github.com/epec254/rag_code/tree/main/RAG%20Cookbook/B_pdf_rag_with_multi_turn_chat) that includes a sample guardrail prompt using the current advanced DBdemo as an example |
 
 ## Deployment
 
