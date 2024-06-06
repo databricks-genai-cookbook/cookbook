@@ -22,11 +22,11 @@ The foundation of any RAG application with unstructured data is the data pipelin
 
 4. **Embedding:** Converting the chunked text data into a numerical vector representation that captures its semantic meaning
 
-We discuss how to experiment with all of these data pipeline choices from a practical standpoint in [implementing data pipeline changes](/nbs/5-hands-on#data-pipeline-changes).
+We discuss how to experiment with all of these data pipeline choices from a practical standpoint in [implementing data pipeline changes](/nbs/5-hands-on.md#data-pipeline-changes).
 
 ### Corpus composition
 
-To state the obvious, without the right data corpus, your RAG application won't be able to retrieve the information required to answer a user query. The right data will be entirely dependent on the specific requirements and goals of your application, making it crucial to dedicate time to understand the nuances of data available (see the [requirements gathering section](/nbs/5-hands-on#requirements-questions) for guidance on this).
+To state the obvious, without the right data corpus, your RAG application won't be able to retrieve the information required to answer a user query. The right data will be entirely dependent on the specific requirements and goals of your application, making it crucial to dedicate time to understand the nuances of data available (see the [requirements gathering section](/nbs/5-hands-on.md#requirements-questions) for guidance on this).
 
 For example, when building a customer support bot, you might consider including:
 
@@ -133,7 +133,7 @@ The RAG chain takes a user query as input, retrieves relevant information given 
 
 5. **Post-processing and guardrails:** Applying additional processing steps and safety measures to ensure the LLM-generated responses are on-topic, factually consistent, and adhere to specific guidelines or constraints.
 
-In the [implementing RAG chain changes](nbs/5-hands-on#rag-chain-changes) section we will demonstrate how to iterate over these various components of a chain.
+In the [implementing RAG chain changes](nbs/5-hands-on.md#rag-chain-changes) section we will demonstrate how to iterate over these various components of a chain.
 
 ### Query understanding
 
