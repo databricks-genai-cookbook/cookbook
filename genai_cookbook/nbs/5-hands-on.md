@@ -9,7 +9,9 @@ This section walks you through Databricks recommended development workflow for b
 5. Deploy to production
 6. Monitor in production
 
-![](media/image18.png)
+```{image} ../images/5-hands-on/1_img.png
+:align: center
+```
 
 Mapping to this workflow, this section provides ready-to-run sample code for every step and every suggestion to improve quality.
 
@@ -37,7 +39,9 @@ Anchoring against metrics and an evaluation set provides the following benefits:
 
 ## Gather requirements
 
-![](media/image11.png)
+```{image} ../images/5-hands-on/2_img.png
+:align: center
+```
 
 Defining clear and comprehensive use case requirements is a critical first step in developing a successful RAG application. These requirements serve two primary purposes. Firstly, they help determine whether RAG is the most suitable approach for the given use case. If RAG is indeed a good fit, these requirements guide solution design, implementation, and evaluation decisions. Investing time at the outset of a project to gather detailed requirements can prevent significant challenges and setbacks later in the development process, and ensures that the resulting solution meets the needs of end-users and stakeholders. Well-defined requirements provide the foundation for the subsequent stages of the development lifecycle we'll walk through.
 
@@ -154,7 +158,9 @@ Let's look at how some of these questions apply to the Databricks customer suppo
 
 ## Build & Collect Feedback on POC
 
-![](media/image15.png)
+```{image} ../images/5-hands-on/3_img.png
+:align: center
+```
 
 The first step in evaluation-driven development is to build a proof of concept (POC). A POC offers several benefits:
 
@@ -187,11 +193,15 @@ This enables you to quickly deploy a POC, but transition quickly to quality iter
 
 At the end of this step, you will have deployed the Quality Lab Review App which allows your stakeholders to test and provide feedback on your POC. Detailed logs from your stakeholder's usage and their feedback will flow to Delta Tables in your Lakehouse.
 
-![](media/image22.png)
+```{image} ../images/5-hands-on/4_img.png
+:align: center
+```
 
 Below is the technical architecture of the POC application.
 
-[![](media/image24.png)](https://docs.google.com/presentation/d/10YMR3HIe98TUVyGvQn-OeHkS3JXuUZVDDjzXDD2Jclw/edit#slide=id.g2e1b6c180f1_0_52)
+```{image} ../images/5-hands-on/5_img.png
+:align: center
+```
 
 By default, the POC uses the open source models available on [Mosaic AI Foundation Model Serving](https://www.databricks.com/product/pricing/foundation-model-serving). However, because the POC uses Mosaic AI Model Serving, which supports *any foundation model*, using a different model is easy - simply configure that model in Model Serving and then replace the embedding_endpoint_name and llm_endpoint_name parameters in the POC code.
 
@@ -217,7 +227,9 @@ If your data doesn't meet one of the above requirements, [insert instructions on
 
 Once you have imported the code, you will have the following notebooks:
 
-![](media/image25.png)
+```{image} ../images/5-hands-on/6_img.png
+:align: center
+```
 
 #### 2. Configure your application
 
@@ -249,7 +261,9 @@ To run this pipeline and generate your initial Vector Index:
 
 3. In the last cell of the notebook, you can see the resulting Delta Tables and Vector Index.
 
-![](media/image29.png)
+```{image} ../images/5-hands-on/7_img.png
+:align: center
+```
 
 Parameters and their default values that are configured in `00_config`.
 
@@ -271,7 +285,9 @@ The POC chain is a RAG chain that provides a default implementation of the param
 
 3. You will see the MLflow Trace that shows you how the POC application works. Adjust the input question to one that is relevant to your use case, and re-run the cell to "vibe check" the application.
 
-   ![](media/image8.png)
+```{image} ../images/5-hands-on/8_img.png
+:align: center
+```
 
 4. Modify the default instructions to be relevant to your use case.
 
@@ -299,11 +315,15 @@ The POC chain is a RAG chain that provides a default implementation of the param
 
 5. Run the deployment cell to get a link to the Review App.
 
-   ![](media/image6.png)
+```{image} ../images/5-hands-on/9_img.png
+:align: center
+```
 
 6. Grant individual users permissions to access the Review App.
 
-   ![](media/image27.png)
+```{image} ../images/5-hands-on/10_img.png
+:align: center
+```
 
 7. Test the Review App by asking a few questions yourself and providing feedback.
    - You can view the data in Delta Tables. Note that results can take up to 2 hours to appear in the Delta Tables.
@@ -326,7 +346,9 @@ We suggest distributing your POC to at least 3 stakeholders and having them each
 
 ## Evaluate the POC's quality
 
-![](media/image14.png)
+```{image} ../images/5-hands-on/11_img.png
+:align: center
+```
 
 **Expected time:** 30-60 minutes
 
@@ -367,9 +389,13 @@ Now that your stakeholders have used your POC, we can use their feedback to meas
 
 6. Evaluate the POC with Quality Lab's LLM Judge-based evaluation. Open MLflow to view the results.
 
-   ![](media/image28.png)
+```{image} ../images/5-hands-on/12_img.png
+:align: center
+```
 
-   ![](media/image19.png)
+```{image} ../images/5-hands-on/13_img.png
+:align: center
+```
 
 #### 2. Review evaluation results
 
@@ -385,7 +411,9 @@ It is worth noting: if the results meet your requirements for quality, you can s
 
 ## Improve RAG quality
 
-![](media/image26.png)
+```{image} ../images/5-hands-on/14_img.png
+:align: center
+```
 
 While a basic RAG chain is relatively straightforward to implement, refining it to consistently produce high-quality outputs is often non-trivial. Identifying the root causes of issues and determining which levers of the solution to pull to improve output quality requires understanding the various components and their interactions.
 
@@ -412,7 +440,9 @@ From an implementation standpoint, we can divide our RAG solution into two compo
 
 [**Data pipeline**](#data-pipeline-1)
 
-[![](media/image13.png)](https://docs.google.com/presentation/d/10YMR3HIe98TUVyGvQn-OeHkS3JXuUZVDDjzXDD2Jclw/edit#slide=id.g27258db9d63_0_3712)
+```{image} ../images/5-hands-on/15_img.png
+:align: center
+```
 
 - What is the composition of the input data corpus?
 - How raw data is extracted and transformed into a usable format (e.g., parsing a PDF document)
@@ -422,7 +452,9 @@ From an implementation standpoint, we can divide our RAG solution into two compo
 
 [**RAG chain**](#rag-chain)
 
-![](media/image16.png)
+```{image} ../images/5-hands-on/16_img.png
+:align: center
+```
 
 - The choice of LLM and its parameters (e.g., temperature, max tokens)
 - The retrieval parameters (e.g., number of chunks/documents retrieved)
@@ -595,4 +627,6 @@ Once you have identified a potential fix based on the debugging process outlined
 
 ## Deployment
 
-![](media/image9.png)
+```{image} ../images/5-hands-on/17_img.png
+:align: center
+```
