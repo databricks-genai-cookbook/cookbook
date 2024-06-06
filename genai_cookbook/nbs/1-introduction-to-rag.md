@@ -1,22 +1,22 @@
 # Section 1: Introduction to retrieval-augmented generation (RAG)
 
-This section provides an overview of retrieval augmented generation (RAG): what it is, how it works, and key concepts.
+This section provides an overview of Retrieval-augmented generation (RAG): what it is, how it works, and key concepts.
 
-## What is Retrieval-Augmented Generation?
+## What is retrieval-augmented generation?
 
-Retrieval-Augmented Generation (RAG) is a technique that enables a large language model (LLM) to generate enriched responses by augmenting a user's prompt with supporting data retrieved from an outside information source. By incorporating this additional context, RAG enables the LLM to generate more accurate, higher quality responses compared to using the prompt alone.
+Retrieval-augmented generation (RAG) is a technique that enables a large language model (LLM) to generate enriched responses by augmenting a user’s prompt with supporting data retrieved from an outside information source. By incorporating this retrieved information, RAG enables the LLM to generate more accurate, higher quality responses compared to using the prompt alone.
 
-For example, suppose you are building a question-and-answer chatbot to help employees answer questions about your company's proprietary documents. A standalone LLM won't be able to accurately answer questions about the content of these documents if it was not specifically trained on them. The LLM might refuse to answer due to a lack of information or, even worse, it might generate an incorrect response.
+For example, suppose you are building a question-and-answer chatbot to help employees answer questions about your company’s proprietary documents. A standalone LLM won’t be able to accurately answer questions about the content of these documents if it was not specifically trained on them. The LLM might refuse to answer due to a lack of information or, even worse, it might generate an incorrect response. 
 
-RAG addresses this issue by first retrieving relevant information from the company documents based on a user's query, and then providing the retrieved information to the LLM as additional context. This allows the LLM to generate a more accurate response by drawing from the specific details found in the relevant documents. In essence, RAG enables the LLM to "consult" the required information to formulate its answer.
+RAG addresses this issue by first retrieving relevant information from the company documents based on a user’s query, and then providing the retrieved information to the LLM as additional context. This allows the LLM to generate a more accurate response by drawing from the specific details found in the relevant documents. In essence, RAG enables the LLM to “consult” the retrieved information to formulate its answer.
 
 ## Core components of a RAG application
 
 A RAG application is an example of a [compound AI system](https://bair.berkeley.edu/blog/2024/02/18/compound-ai-systems/): it expands on the language capabilities of the model alone by combining it with other tools and procedures.
 
-When using an LLM alone, a user submits a request, such as a question, to the LLM, and the LLM responds with an answer based solely on its training data.
+When using a stand-alone LLM, a user submits a request, such as a question, to the LLM, and the LLM responds with an answer based solely on its training data.  
 
-In the simplest form of a RAG application, the following happens:
+In its most basic form, the following steps happen in a RAG application:
 
 1. **Retrieval:** The **user's request** is used to query some outside source of information. This might mean querying a database or vector store, a keyword search over some text, or querying a SQL database. The goal of the retrieval step is to obtain **supporting data** that will help the LLM provide a useful response.
 
@@ -35,6 +35,8 @@ This is a simplified overview of the RAG process, but it's important to note tha
 
 ## Why use RAG?
 
+The following table outlines the benefits of using RAG versus a stand-alone LLM:
+
 | With an LLM alone                                                                                                                                                                                   | Using LLMs with RAG                                                                                                                                                                                                   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **No proprietary knowledge:** LLMs are generally trained on publicly available data, so they cannot accurately answer questions about a company's internal or proprietary data.                      | **RAG applications can incorporate proprietary data:** A RAG application can supply proprietary documents such as memos, emails, and design documents to an LLM, enabling it to answer questions about those documents. |
@@ -46,13 +48,9 @@ This is a simplified overview of the RAG process, but it's important to note tha
 
 The RAG architecture can work with 2 types of **supporting data**:
 
-1. **Unstructured data:** Data without a specific structure or organization, e.g., documents that include text and images or multimedia content such as audio or videos.
-
-2. **Structured data:** Tabular data arranged in rows & columns with a specific schema e.g., tables in a database.
-
 | | Structured data | Unstructured data |
 |---|---|---|
 | **Definition** | Tabular data arranged in rows & columns with a specific schema e.g., tables in a database. | Data without a specific structure or organization, e.g., documents that include text and images or multimedia content such as audio or videos. |
 | **Example data sources** | - Customer records in a BI or Data Warehouse system<br>- Transaction data from a SQL database<br>- Data from application APIs (e.g., SAP, Salesforce, etc) | - PDFs<br>- Google/Office documents<br>- Wikis<br>- Images<br>- Videos |
 
-Which data you use with RAG depends on your use case. To understand which type of data to use for your application, consult the use cases section of this guide. The remainder of this guide focuses on **RAG for unstructured data**.
+Which data you use with RAG depends on your use case. The remainder of this guide focuses on RAG for unstructured data.
