@@ -88,6 +88,6 @@ Evaluation and monitoring the quality, cost and latency requires several compone
 
 - **Collecting stakeholder feedback:** As a developer, you may not be a domain expert in the content of the application you are developing. In order to collect feedback from human experts who can assess your application quality, you need an interface that allows them to interact with the application and provide detailed feedback.
 
-We will cover evaluation in much more detail in [Section 4: Evaluation](nbs/4-evaluation).
+We will cover evaluation in much more detail in [Section 4: Evaluation](/nbs/4-evaluation).
 
 The [next section](/nbs/3-deep-dive) of this guide will unpack the finer details of the typical components that make up the data pipeline and RAG chain of a RAG application using unstructured data.

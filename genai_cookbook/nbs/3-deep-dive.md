@@ -4,7 +4,7 @@ In the previous section, we introduced the key components of a RAG application a
 
 Above we alluded to the myriad of "knobs" to tune at every point in both the offline data pipeline, and online RAG chain. While there are numerous options to consider, we will focus on the table stakes considerations that should be prioritized when improving the quality of your RAG application. It's important to note that this is just scratching the surface, and there are many more advanced techniques that can be explored.
 
-In the following sections of this guide, we will discuss how to measure changes with [evals](nbs/4-evaluation), and finish by outlining how to diagnose root causes and possible fixes in the final [hands-on section](nbs/5-hands-on).
+In the following sections of this guide, we will discuss how to measure changes with [evals](/nbs/4-evaluation), and finish by outlining how to diagnose root causes and possible fixes in the final [hands-on section](/nbs/5-hands-on).
 
 ## Data pipeline
 
@@ -22,11 +22,11 @@ The foundation of any RAG application with unstructured data is the data pipelin
 
 4. **Embedding:** Converting the chunked text data into a numerical vector representation that captures its semantic meaning
 
-We discuss how to experiment with all of these data pipeline choices from a practical standpoint in [implementing data pipeline changes](nbs/5-hands-on#data-pipeline-changes).
+We discuss how to experiment with all of these data pipeline choices from a practical standpoint in [implementing data pipeline changes](/nbs/5-hands-on#data-pipeline-changes).
 
 ### Corpus composition
 
-To state the obvious, without the right data corpus, your RAG application won't be able to retrieve the information required to answer a user query. The right data will be entirely dependent on the specific requirements and goals of your application, making it crucial to dedicate time to understand the nuances of data available (see the [requirements gathering section](nbs/5-hands-on#requirements-questions) for guidance on this).
+To state the obvious, without the right data corpus, your RAG application won't be able to retrieve the information required to answer a user query. The right data will be entirely dependent on the specific requirements and goals of your application, making it crucial to dedicate time to understand the nuances of data available (see the [requirements gathering section](/nbs/5-hands-on#requirements-questions) for guidance on this).
 
 For example, when building a customer support bot, you might consider including:
 
