@@ -1,4 +1,4 @@
-# Section 1: Introduction to retrieval-augmented generation (RAG)
+# **Section 1:** Introduction to retrieval-augmented generation (RAG)
 
 This section provides an overview of Retrieval-augmented generation (RAG): what it is, how it works, and key concepts.
 

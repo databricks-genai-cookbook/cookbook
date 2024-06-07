@@ -1,4 +1,4 @@
-# Section 3: Deep dive into RAG over unstructured documents
+# **Section 3:** Deep dive into RAG over unstructured documents
 
 In the previous section, we introduced the key components of a RAG application and discussed the fundamental principles behind developing RAG applications over unstructured data. This section discusses how you can think about refining each component in order to increase the quality of your application.
 
@@ -199,10 +199,9 @@ The following table contrasts each of these retrieval strategies against one ano
 | | Semantic search | Keyword search | Hybrid search |
 |---|---|---|---|
 | **Simple explanation** | If the same **concepts** appear in the query and a potential document, they are relevant. | If the same **words** appear in the query and a potential document, they are relevant. The **more words** from the query in the document, the more relevant that document is. | Runs BOTH a semantic search and keyword search, then combines the results. |
-| **Example** | If the user searches for "RAG", a document referring to "retrieval-augmented generation" would be returned even if the document does NOT have the words "RAG" in it. | If the user searches for "RAG", a document referring to "retrieval-augmented generation" would be NOT returned UNLESS the document HAS the words "RAG" in it. | Both documents would be returned. |
+| **Example use case** | Customer support where user queries are different than the words in the product manuals<br><br>e.g., *"how do i turn my phone on?"* and the manual section is called *"toggling the power"*. | Customer support where queries contain specific, non descriptive technical terms.<br><br>e.g., *"what does model HD7-8D do?"* | Customer support queries that combined both semantic and technical terms.<br><br>e.g., *"how do I turn on my HD7-8D?"* |
 | **Technical approaches** | Uses embeddings to represent text in a continuous vector space, enabling semantic search | Relies on discrete token-based methods like [bag-of-words](https://en.wikipedia.org/wiki/Bag-of-words_model), [TF-IDF](https://en.wikipedia.org/wiki/Tf%E2%80%93idf), [BM25](https://en.wikipedia.org/wiki/Okapi_BM25) for keyword matching. | Use a re-ranking approach to combine the results, such as [reciprocal rank fusion](https://www.elastic.co/guide/en/elasticsearch/reference/current/rrf.html) or a [re-ranking model](https://en.wikipedia.org/wiki/Learning_to_rank). |
 | **Strengths** | Retrieving contextually similar information to a query, even if the exact words are not used. | Scenarios requiring precise keyword matches, ideal for specific term-focused queries such as product names. | Combines the best of both approaches. |
-| **Example use case** | Customer support where user queries are different than the words in the product manuals<br><br>e.g., *"how do i turn my phone on?"* and the manual section is called *"toggling the power"*. | Customer support where queries contain specific, non descriptive technical terms.<br><br>e.g., *"what does model HD7-8D do?"* | Customer support queries that combined both semantic and technical terms.<br><br>e.g., *"how do I turn on my HD7-8D?"* |
 
 In addition to these core retrieval strategies, there are several techniques you can apply to further enhance the retrieval process:
 

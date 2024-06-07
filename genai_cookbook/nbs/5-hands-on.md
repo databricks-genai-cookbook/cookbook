@@ -1,4 +1,4 @@
-# Section 5: Hands-on guide to implementing high-quality RAG
+# **Section 5:** Hands-on guide to implementing high-quality RAG
 
 This section walks you through Databricks recommended development workflow for building, testing, and deploying a high-quality RAG application: **evaluation-driven development**. This workflow is based on the Mosaic Research team's best practices for building and evaluating high quality RAG applications. If quality is important to your business, Databricks recommends following an evaluation-driven workflow:
 
