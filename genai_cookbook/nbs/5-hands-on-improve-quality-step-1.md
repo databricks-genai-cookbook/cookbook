@@ -23,7 +23,13 @@ If you have human labeled ground-truth for which document should be retrieved fo
 
 **Instructions**
 
-How you root cause your app depends on if your evaluation set contains the ground-truth responses to your questions - stored in `expected_response`.  If you have these available, use the first table below.  Otherwise, use the second table
+How you root cause your app depends on if your evaluation set contains the ground-truth responses to your questions - stored in `expected_response`.  If you have these available, use the first table below.  Otherwise, use the second table.
+
+1. Open the `06_root_cause_poc_quality_issues` Notebook
+2. Press Run All
+3. Review the output tables to determine the most frequent root cause in your application and follow the steps linked below:
+  - [Improve retriever](./5-hands-on-improve-quality-step-1-retrieval.md)
+  - [Improve LLM](./5-hands-on-improve-quality-step-1-generation.md)
 
 **_Root cause analysis with available ground truth_**
 
