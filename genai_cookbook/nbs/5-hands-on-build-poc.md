@@ -5,7 +5,17 @@
 ```
 <br/>
 
-### Overview 
+**Expected time:** 30-60 minutes
+
+**Expected outcome**
+
+At the end of this step, you will have deployed the [Quality Lab Review App](https://docs.databricks.com/generative-ai/agent-evaluation/human-evaluation.html) which allows your stakeholders to test and provide feedback on your POC. Detailed logs from your stakeholder's usage and their feedback will flow to Delta Tables in your Lakehouse.
+
+```{image} ../images/5-hands-on/review_app2.gif
+:align: center
+```
+
+**Overview**
 
 The first step in evaluation-driven development is to build a proof of concept (POC). A POC offers several benefits:
 
@@ -15,9 +25,6 @@ The first step in evaluation-driven development is to build a proof of concept (
 
 Databricks recommends building your POC using the simplest RAG chain architecture and our recommended defaults for each knob/parameter.  
 
-```{note}
-**Important:** our recommended default parameters are by no means perfect, nor are they intended to be. Rather, they are a place to start from - the next steps of our workflow guide you through iterating on these parameters.
-```
 
 ```{note}
 **Why start from a simple POC?** There are hundreds of possible combinations of knobs you can tune within your RAG application. You can easily spend weeks tuning these knobs, but if you do so before you can systematically evaluate your RAG, you'll end up in what we call the POC doom loop—iterating on settings, but with no way to objectively know if you made an improvement—all while your stakeholders sit around impatiently waiting.
@@ -26,20 +33,6 @@ Databricks recommends building your POC using the simplest RAG chain architectur
 The POC template in this cookbook are designed with quality iteration in mind.  That is, they are parameterized with the knobs that our research has shown are most important to tune in order to improve RAG quality.  Said differently, these templates are not "3 lines of code that magically make a RAG"—rather, they are a well-structured RAG application that can be tuned for quality in the following steps of an evaluation-driven development workflow.  
 
 This enables you to quickly deploy a POC, but transition quickly to quality iteration without needing to rewrite your code.
-
-At the end of this step, you will have deployed the [Quality Lab Review App](https://docs.databricks.com/generative-ai/agent-evaluation/human-evaluation.html) which allows your stakeholders to test and provide feedback on your POC. Detailed logs from your stakeholder's usage and their feedback will flow to Delta Tables in your Lakehouse.
-
-```{image} ../images/5-hands-on/4_img.png
-:align: center
-```
-
-### Step-by-step instructions
-
-**Expected time:** 30-60 minutes
-
-**Requirements:**
-- Completed [start here](./6-implement-overview.md) steps
-- Data from your [requirements](/nbs/5-hands-on-requirements.md#requirements-questions) is available in your [Lakehouse](https://www.databricks.com/blog/2020/01/30/what-is-a-data-lakehouse.html) inside a [Unity Catalog](https://www.databricks.com/product/unity-catalog) [volume](https://docs.databricks.com/en/connect/unity-catalog/volumes.html) <!-- or [Delta Table](https://docs.databricks.com/en/delta/index.html)-->
 
 Below is the technical architecture of the POC application.
 
@@ -53,6 +46,17 @@ By default, the POC uses the open source models available on [Mosaic AI Foundati
 - Follow [these steps](https://docs.databricks.com/en/machine-learning/foundation-models/deploy-prov-throughput-foundation-model-apis.html) for other open source models available in the Databricks Marketplace
 - Follow this [notebook](REPO_URL/helpers/Create_OpenAI_External_Model.py) or these [instructions](https://docs.databricks.com/en/generative-ai/external-models/index.html) for 3rd party models such as Azure OpenAI, OpenAI, Cohere, Anthropic, Google Gemini, etc.
 ```
+
+
+
+**Requirements**
+- Completed [start here](./6-implement-overview.md) steps
+- Data from your [requirements](/nbs/5-hands-on-requirements.md#requirements-questions) is available in your [Lakehouse](https://www.databricks.com/blog/2020/01/30/what-is-a-data-lakehouse.html) inside a [Unity Catalog](https://www.databricks.com/product/unity-catalog) [volume](https://docs.databricks.com/en/connect/unity-catalog/volumes.html) <!-- or [Delta Table](https://docs.databricks.com/en/delta/index.html)-->
+
+
+**Instructions**
+
+
 
 1. **Open the POC code folder within `01_POC_app` based on your type of data:**
 
@@ -81,6 +85,11 @@ By default, the POC uses the open source models available on [Mosaic AI Foundati
 
    Open the `00_config` Notebook to view the POC's applications default parameters for the data pipeline and RAG chain.
 
+
+   ```{note}
+   **Important:** our recommended default parameters are by no means perfect, nor are they intended to be. Rather, they are a place to start from - the next steps of our workflow guide you through iterating on these parameters.
+   ```
+
 3. **Validate the configuration**
 
    Run the `00_validate_config` to check that your configuration is valid and all resources are available. You will see an `rag_chain_config.yaml` file appear in your directory - we will use this in step 4 to deploy the application.
@@ -94,11 +103,14 @@ By default, the POC uses the open source models available on [Mosaic AI Foundati
    3. Chunk each document, saving the results to a Delta Table
    4. Embed the documents and create a Vector Index using Mosaic AI Vector Search
 
-   Metadata (output tables, configuration, etc) about the data pipeline are logged to MLflow.
+   <br/>
 
-   ```{image} ../images/5-hands-on/6_img.png
+   Metadata (output tables, configuration, etc) about the data pipeline are logged to MLflow:
+
+   ```{image} ../images/5-hands-on/datapipelinemlflow.gif
    :align: center
    ```
+   
 
    <br/>
 
@@ -157,17 +169,13 @@ By default, the POC uses the open source models available on [Mosaic AI Foundati
 
    5. Run the deployment cell to get a link to the Review App.
 
-      ```{image} ../images/5-hands-on/9_img.png
-      :align: center
+      ```
+      Review App URL: https://<your-workspace-url>.databricks.com/ml/review/<uc-catalog>.<uc-schema>.<uc-model-name>/<uc-model-version>
       ```
 
 6. **Grant individual users permissions to access the Review App.**  
 
    You can grant access to non-Databricks users by following these [steps](https://docs.databricks.com/generative-ai/agent-evaluation/human-evaluation.html#set-up-sso-permissions-to-the-review-app-workspace).
-
-   ```{image} ../images/5-hands-on/10_img.png
-   :align: center
-   ```
 
 7. **Test the Review App by asking a few questions yourself and providing feedback.**
    
