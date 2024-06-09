@@ -4,6 +4,9 @@
 format: jb-book
 root: index
 parts:
+- caption: "Overview"
+  chapters:
+    - file: index-2
 - caption: "Learn"
   numbered: true
   chapters:
@@ -25,7 +28,7 @@ parts:
     - file: nbs/4-evaluation-infra
   - file: nbs/5-rag-development-workflow
 - caption: "Implement"
-  numbered: true
+  numbered: false
   chapters:
   - file: nbs/5-hands-on-requirements
   - file: nbs/6-implement-overview

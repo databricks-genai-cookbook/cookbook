@@ -1,5 +1,10 @@
 ### Implement and evaluate changes
 
+```{image} ../images/5-hands-on/workflow_iterate.png
+:align: center
+```
+<br/>
+
 As discussed above, when working to improve the quality of the RAG system, changes can be broadly categorized into three buckets:
 
 1. **![Data pipeline](../images/5-hands-on/data_pipeline.png)** Data pipeline changes

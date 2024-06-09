@@ -1,10 +1,15 @@
-## **Start here:** Clone code repo & create compute
+## **Step 1:** Clone code repo & create compute
+
+```{image} ../images/5-hands-on/workflow_poc.png
+:align: center
+```
+<br/>
 
 The implement section is coupled with a repository of sample code designed to work on Databricks. 
 
 Follow these steps to load the sample code to your Databricks workspace and configure the global settings for the application.
 
-**Requirements**
+### **Requirements**
 
 1. A Databricks workspace with [serverless](https://docs.databricks.com/en/admin/workspace-settings/serverless.html) and Unity Catalog enabled
 2. A [Mosaic AI Vector Search](https://docs.databricks.com/en/generative-ai/vector-search.html) endpoint, either:
@@ -17,7 +22,7 @@ Follow these steps to load the sample code to your Databricks workspace and conf
     - These tutorials have Python package conflicts with Machine Learning Runtime.  
     - Internet access is required to download the necessary Python and system packages 
 
-**Instructions**
+### **Instructions**
 
 1. Clone this repository into your workspace using [Git Folders](https://docs.databricks.com/en/repos/repos-setup.html)
 
