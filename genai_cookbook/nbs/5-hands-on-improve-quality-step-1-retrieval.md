@@ -1,4 +1,4 @@
-#### Retrieval quality
+#### Debugging retrieval quality
 
 ##### How to debug retrieval quality
 
@@ -38,9 +38,9 @@ Here's a step-by-step process to address **retrieval quality** issues:
 
 Each of these potential fixes are can be broadly categorized into three buckets:
 
-1. **![Data pipeline](../images/5-hands-on/data_pipeline.png)** Data pipeline changes
-2. **![Chain config](../images/5-hands-on/chain_config.png)** RAG chain configuration changes
-3. **![Chain code](../images/5-hands-on/chain_code.png)** RAG chain code changes
+1. **![Data pipeline](../images/5-hands-on/data_pipeline.png)** changes
+2. **![Chain config](../images/5-hands-on/chain_config.png)** changes
+3. **![Chain code](../images/5-hands-on/chain_code.png)** changes
 
 Based on the type of change, you will follow different steps in the [implement and evaluate changes](./5-hands-on-improve-quality-step-2.md) step.
 
@@ -66,7 +66,7 @@ Based on the type of change, you will follow different steps in the [implement a
 <tr>
 <td>Chunks don&#39;t have enough information about the text from which they were taken</td>
 <td><ul><li>Assess if the lack of context for each chunk is causing confusion or ambiguity in the retrieved results</li></ul></td>
-<td><ul><li><img src="../_images/data_pipeline.png" alt="data-pipeline" height="20"/> Chain codeTry adding metadata &amp; titles to each chunk (e.g., section titles)</li><li><img src="../_images/chain_config.png" alt="chain-config" height="20"/> Retrieve more chunks, and use an LLM with larger context size</li></ul></td>
+<td><ul><li><img src="../_images/data_pipeline.png" alt="data-pipeline" height="20"/> Try adding metadata &amp; titles to each chunk (e.g., section titles)</li><li><img src="../_images/chain_config.png" alt="chain-config" height="20"/> Retrieve more chunks, and use an LLM with larger context size</li></ul></td>
 </tr>
 <tr>
 <td>Embedding model doesn&#39;t accurately understand the domain and/or key phrases in user queries</td>

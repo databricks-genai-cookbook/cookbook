@@ -1,4 +1,4 @@
-### Identify the root cause of quality issues
+### **Step 5:** Identify the root cause of quality issues
 
 ```{image} ../images/5-hands-on/workflow_iterate.png
 :align: center
@@ -15,38 +15,35 @@
 
 #### **Overview**
 
-Retrieval and generation are the 2 primary buckets of root causes.  To determine where we focus on first, we  use the output of the Mosaic AI Quality Lab's LLM judges that you ran in the previous [step](./5-hands-on-evaluate-poc.md) to identify the most frequent root cause that impacts your app's quality.  We  use the output of the following metrics to reach a single root cause for each row in your evaluation set:
-- `retrieval/llm_judged/chunk_relevance/precision`
-- `response/llm_judged/groundedness/rating/percentage`
-- `response/llm_judged/correctness/rating/percentage`
-- `response/llm_judged/relevance_to_query/rating/percentage`
+Retrieval and generation are the 2 primary buckets of root causes.  To determine where we focus on first, we  use the output of the Mosaic AI Quality Lab's LLM judges that you ran in the previous [step](./5-hands-on-evaluate-poc.md) to identify the most frequent root cause that impacts your app's quality.  W
 
-If you have human labeled ground-truth for which document should be retrieved for each question, you can optionally substitute `retrieval/llm_judged/chunk_relevance/precision/average` with the score for `retrieval/ground_truth/document_recall/average`.
 
 Each row your evaluation set will be tagged as follows:
 1. **Overall assessment:** ![pass](../images/5-hands-on/pass.png) or ![fail](../images/5-hands-on/fail.png)
-2. **Root cause:** <code>Improve Retrieval</code> or `Improve Generation`
+2. **Root cause:** `Improve Retrieval` or `Improve Generation`
 3. **Root cause rationale:** A brief description of why the root cause was selected
 
 #### **Instructions**
 
 The approach depends on if your evaluation set contains the ground-truth responses to your questions - stored in `expected_response`.  If you have `expected_response` available, use the first table below.  Otherwise, use the second table.
 
-1. Open the `quality_iteration/01_root_cause_quality_issues` Notebook
+1. Open the `B_quality_iteration/01_root_cause_quality_issues` Notebook
 2. Run the cells that are relevant to your use case e.g., if you do or don't have `expected_response`
 3. Review the output tables to determine the most frequent root cause in your application
-4. For the most frequent root cause, follow the steps linked below:
-    - [Improve Retrieval](./5-hands-on-improve-quality-step-1-retrieval.md)
-    - [Improve Generation](./5-hands-on-improve-quality-step-1-generation.md)
+4. For each root cause, follow the steps below to further debug and identify potential fixes:
+    - [Debugging retrieval quality](./5-hands-on-improve-quality-step-1-retrieval.md)
+    - [Debugging generation quality](./5-hands-on-improve-quality-step-1-generation.md)
 
-##### **_Root cause analysis with available ground truth_**
+##### Root cause analysis _with_ available ground truth
 
-
+```{note}
+If you have human labeled ground-truth for which document should be retrieved for each question, you can optionally substitute `retrieval/llm_judged/chunk_relevance/precision/average` with the score for `retrieval/ground_truth/document_recall/average`.
+```
 
 <table class="table">
   
   <tr>
-   <td>Retrieval precision
+   <td>Chunk relevance precision
    </td>
    <td>Groundedness
    </td>
@@ -243,11 +240,11 @@ The approach depends on if your evaluation set contains the ground-truth respons
 <br/>
 
 
-##### **_Root cause analysis WITHOUT available ground truth_**
+##### Root cause analysis _without_ available ground truth
 
 <table class="table">
   <tr>
-   <td>Retrieval precision
+   <td>Chunk relevance precision
    </td>
    <td>Groundedness
    </td>

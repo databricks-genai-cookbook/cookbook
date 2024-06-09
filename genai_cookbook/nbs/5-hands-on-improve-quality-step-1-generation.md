@@ -1,4 +1,4 @@
-#### Generation quality
+#### Debugging generation quality
 
 ##### Debugging generation quality
 
@@ -35,9 +35,9 @@ The following is a step-by-step process to address **generation quality** issues
 
 Each of these potential fixes are can be broadly categorized into three buckets:
 
-1. **![Data pipeline](../images/5-hands-on/data_pipeline.png)** Data pipeline changes
-2. **![Chain config](../images/5-hands-on/chain_config.png)** RAG chain configuration changes
-3. **![Chain code](../images/5-hands-on/chain_code.png)** RAG chain code changes
+1. **![Data pipeline](../images/5-hands-on/data_pipeline.png)** changes
+2. **![Chain config](../images/5-hands-on/chain_config.png)** changes
+3. **![Chain code](../images/5-hands-on/chain_code.png)** changes
 
 Based on the type of change, you will follow different steps in the [implement and evaluate changes](./5-hands-on-improve-quality-step-2.md) step.
 <table>
