@@ -1,11 +1,11 @@
 # Databricks notebook source
-# MAGIC %pip install -U -qqqq databricks-rag-studio mlflow mlflow-skinny databricks-sdk
+# MAGIC %pip install -U -qqqq databricks-agents mlflow mlflow-skinny databricks-sdk
 # MAGIC dbutils.library.restartPython()
 
 # COMMAND ----------
 
 import mlflow
-from databricks import rag_studio
+from databricks import agents
 import pandas as pd
 
 # COMMAND ----------

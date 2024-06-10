@@ -26,13 +26,13 @@
 
 # COMMAND ----------
 
-# MAGIC %pip install -U -qqqq pyyaml databricks-rag-studio mlflow mlflow-skinny databricks-sdk flashrank==0.2.4
+# MAGIC %pip install -U -qqqq pyyaml databricks-agents mlflow mlflow-skinny databricks-sdk flashrank==0.2.4
 # MAGIC dbutils.library.restartPython()
 
 # COMMAND ----------
 
 import mlflow
-from databricks import rag_studio
+from databricks import agents
 import flashrank
 import time
 import os
@@ -409,14 +409,14 @@ for experiment in experiments_to_run:
             artifact_path="chain",  # Required
             input_example=config_dict["input_example"],  # Required
             example_no_conversion=True,  # Required to allow the schema to work,
-            extra_pip_requirements=["databricks-rag-studio"] # TODO: Remove
+            extra_pip_requirements=["databricks-agents"] # TODO: Remove
         )
 
         # Evaluate
         eval_results = mlflow.evaluate(
             data=eval_df,
             model=logged_chain_info.model_uri,
-            model_type="databricks-rag",
+            model_type="databricks-agents",
         )
 
         # Save results for later analysis
@@ -563,17 +563,17 @@ if winner != 'poc':
     uc_registered_model_info = mlflow.register_model(model_uri=winning_config['logged_chain_info'].model_uri, name=UC_MODEL_NAME)
 
     # Deploy to enable the Review APP and create an API endpoint
-    deployment_info = rag_studio.deploy_model(model_name=UC_MODEL_NAME, version=uc_registered_model_info.version)
+    deployment_info = agents.deploy(model_name=UC_MODEL_NAME, model_version=uc_registered_model_info.version)
 
     browser_url = mlflow.utils.databricks_utils.get_browser_hostname()
     print(f"View deployment status: https://{browser_url}/ml/endpoints/{deployment_info.endpoint_name}")
 
     # Add the user-facing instructions to the Review App
-    rag_studio.set_review_instructions(UC_MODEL_NAME, instructions_to_reviewer)
+    agents.set_review_instructions(UC_MODEL_NAME, instructions_to_reviewer)
 
     # Wait for the Review App to be ready
     while w.serving_endpoints.get(deployment_info.endpoint_name).state.ready == EndpointStateReady.NOT_READY or w.serving_endpoints.get(deployment_info.endpoint_name).state.config_update == EndpointStateConfigUpdate.IN_PROGRESS:
         print("Waiting for endpoint to deploy.  This can take 15 - 20 minutes.  Waiting for 5 minutes before checking again...")
         time.sleep(60*5)
 
-    print(f"Review App: {deployment_info.rag_app_url}")
+    print(f"Review App: {deployment_info.review_app_url}")

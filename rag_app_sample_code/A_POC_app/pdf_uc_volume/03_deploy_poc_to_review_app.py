@@ -1,5 +1,5 @@
 # Databricks notebook source
-# MAGIC %pip install -U -qqqq databricks-rag-studio mlflow mlflow-skinny databricks-vectorsearch langchain==0.2.0 langchain_core==0.2.0 langchain_community==0.2.0 
+# MAGIC %pip install -U -qqqq databricks-agents mlflow mlflow-skinny databricks-vectorsearch langchain==0.2.0 langchain_core==0.2.0 langchain_community==0.2.0 
 # MAGIC dbutils.library.restartPython()
 
 # COMMAND ----------
@@ -7,7 +7,7 @@
 import os
 import mlflow
 import time
-from databricks import rag_studio
+from databricks import agents
 from databricks.sdk import WorkspaceClient
 from databricks.sdk.service.serving import EndpointStateReady, EndpointStateConfigUpdate
 from databricks.sdk.errors import NotFound, ResourceDoesNotExist
@@ -46,7 +46,7 @@ with mlflow.start_run(run_name=POC_CHAIN_RUN_NAME):
             "input_example"
         ],  # Save the chain's input schema.  MLflow will execute the chain before logging & capture it's output schema.
         example_no_conversion=True,  # Required by MLflow to use the input_example as the chain's schema
-        extra_pip_requirements=["databricks-rag-studio"] # TODO: Remove this
+        extra_pip_requirements=["databricks-agents"] # TODO: Remove this
     )
 
     # Attach the data pipeline's configuration as parameters
@@ -81,7 +81,7 @@ chain.invoke(chain_input)
 # MAGIC
 # MAGIC Now, let's deploy the POC to the Review App so your stakeholders can provide you feedback.
 # MAGIC
-# MAGIC Notice how simple it is to call `rag_studio.deploy_model()` to enable the Review App and create an API endpoint for the RAG chain!
+# MAGIC Notice how simple it is to call `agents.deploy()` to enable the Review App and create an API endpoint for the RAG chain!
 
 # COMMAND ----------
 
@@ -113,13 +113,13 @@ mlflow.set_registry_uri('databricks-uc')
 uc_registered_model_info = mlflow.register_model(model_uri=logged_chain_info.model_uri, name=UC_MODEL_NAME)
 
 # Deploy to enable the Review APP and create an API endpoint
-deployment_info = rag_studio.deploy_model(model_name=UC_MODEL_NAME, version=uc_registered_model_info.version)
+deployment_info = agents.deploy(model_name=UC_MODEL_NAME, model_version=uc_registered_model_info.version)
 
 browser_url = mlflow.utils.databricks_utils.get_browser_hostname()
 print(f"\n\nView deployment status: https://{browser_url}/ml/endpoints/{deployment_info.endpoint_name}")
 
 # Add the user-facing instructions to the Review App
-rag_studio.set_review_instructions(UC_MODEL_NAME, instructions_to_reviewer)
+agents.set_review_instructions(UC_MODEL_NAME, instructions_to_reviewer)
 
 # Wait for the Review App to be ready
 print("\nWaiting for endpoint to deploy.  This can take 15 - 20 minutes.", end="")
@@ -127,7 +127,7 @@ while w.serving_endpoints.get(deployment_info.endpoint_name).state.ready == Endp
     print(".", end="")
     time.sleep(30)
 
-print(f"\n\nReview App: {deployment_info.rag_app_url}")
+print(f"\n\nReview App: {deployment_info.review_app_url}")
 
 # COMMAND ----------
 
@@ -143,7 +143,7 @@ print(f"\n\nReview App: {deployment_info.rag_app_url}")
 user_list = ["eric.peter@databricks.com"]
 
 # Set the permissions.  If successful, there will be no return value.
-rag_studio.set_permissions(model_name=UC_MODEL_NAME, users=user_list, permission_level=rag_studio.PermissionLevel.CAN_QUERY)
+agents.set_permissions(model_name=UC_MODEL_NAME, users=user_list, permission_level=agents.PermissionLevel.CAN_QUERY)
 
 # COMMAND ----------
 
@@ -157,8 +157,8 @@ rag_studio.set_permissions(model_name=UC_MODEL_NAME, users=user_list, permission
 
 # COMMAND ----------
 
-active_deployments = rag_studio.list_deployments()
+active_deployments = agents.list_deployments()
 
 active_deployment = next((item for item in active_deployments if item.model_name == UC_MODEL_NAME), None)
 
-print(f"Review App URL: {active_deployment.rag_app_url}")
+print(f"Review App URL: {active_deployment.review_app_url}")

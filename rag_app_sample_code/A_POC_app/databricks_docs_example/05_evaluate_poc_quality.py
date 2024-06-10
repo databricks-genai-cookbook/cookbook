@@ -1,12 +1,12 @@
 # Databricks notebook source
-# MAGIC %pip install -U -qqqq databricks-rag-studio mlflow mlflow-skinny databricks-sdk
+# MAGIC %pip install -U -qqqq databricks-agents mlflow mlflow-skinny databricks-sdk
 # MAGIC dbutils.library.restartPython()
 
 # COMMAND ----------
 
 import mlflow
 import pandas as pd
-from databricks import rag_studio
+from databricks import agents
 
 # COMMAND ----------
 
@@ -100,7 +100,7 @@ with mlflow.start_run(run_id=poc_run.info.run_id):
     eval_results = mlflow.evaluate(
         data=eval_df,
         model=f"runs:/{poc_run.info.run_id}/chain",  # replace `chain` with artifact_path that you used when calling log_model.  By default, this is `chain`.
-        model_type="databricks-rag",
+        model_type="databricks-agents",
     )
 
 # COMMAND ----------
