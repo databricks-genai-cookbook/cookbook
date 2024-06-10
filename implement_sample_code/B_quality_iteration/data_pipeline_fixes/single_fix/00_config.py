@@ -216,3 +216,7 @@ print(f"Using config: {config_short_name}\n")
 print(f"Config settings: {configuration}\n")
 print(f"Writing to: {destination_tables_config}")
 
+
+# COMMAND ----------
+
+print(f"MLflow Run name to use in the evaluation notebook: {mlflow_run_name}")

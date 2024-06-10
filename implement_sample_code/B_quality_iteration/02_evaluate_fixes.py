@@ -1,28 +1,28 @@
 # Databricks notebook source
-# MAGIC %md # Evaluate experiments
+# MAGIC %md # Evaluate potential fixes
 # MAGIC
-# MAGIC This notebook evaluates different data pipelines, chain configurations, and chain code experiments.
+# MAGIC This notebook evaluates different data pipelines, chain configurations, and chain code fixes.
 # MAGIC
 # MAGIC **Inputs**
-# MAGIC * 1+ experiment to evaluate, can be any combination of:
-# MAGIC   * Data pipeline experiment
-# MAGIC   * Chain configuration experiment
-# MAGIC   * Chain code experiment
+# MAGIC * 1+ fix to evaluate, can be any combination of:
+# MAGIC   * Data pipeline fix(es)
+# MAGIC   * Chain configuration fix(es)
+# MAGIC   * Chain code fix(es)
 # MAGIC * Baseline chain to compare against, stored as an MLflow run alongside its evaluation
 # MAGIC     * Initially this will be your POC chain, but once you identify a higher-quality experiment, this will become your new baseline
-# MAGIC * List of Agent Evaluation metrics to compare
+# MAGIC * List of Agent Evaluation metrics to use in selecting the best app
 # MAGIC
 # MAGIC **What happens:**
-# MAGIC Each experiment is used to modify the baseline chain.  For example, if your baseline chain had {param1: xx, param2: yy} and the experiment had {param2: zz}, the resulting experiment would be {param1: xx, param2: zz} .  If you provided 2 chain configs, 3 data pipelines, and 4 chain code files, 2 + 3 + 4 = 9 experiments will be evaluated.
+# MAGIC Each experiment is used to modify the baseline chain.  For example, if your baseline chain had {param1: xx, param2: yy} and the experiment had {param2: zz}, the resulting experiment would be {param1: xx, param2: zz} .  If you provided 2 chain configs, 3 data pipelines, and 4 chain code files, 2 + 3 + 4 = 9 fixes will be evaluated.
 # MAGIC
 # MAGIC **Outputs**
-# MAGIC 1. For every experiment
+# MAGIC 1. For every fix
 # MAGIC     * Quality/cost/latency metrics (from Mosiac AI Agent Evaluation)
 # MAGIC     * MLflow logged model, ready to deploy to production or the Review App
-# MAGIC 2. "Winning" strategy 
-# MAGIC     * e.g., which experiment produced the best results
+# MAGIC 2. "Winning" fix (or that the baseline is the best) 
+# MAGIC     * e.g., which fix had the highest metrics
 # MAGIC
-# MAGIC You can then deploy the "winning" experiment to the Review App so you your stakeholders can test it -- or -- if your production quality bar is met, deploy it to a scalable, secure REST API hosted by Databricks.
+# MAGIC You can then deploy the "winning" fix to the Review App so you your stakeholders can test it -- or -- if your production quality bar is met, deploy it to a scalable, secure REST API hosted by Databricks.
 
 # COMMAND ----------
 
@@ -88,24 +88,24 @@ baseline_data_pipeline_config = mlflow.artifacts.load_dict(f"{baseline_run.info.
 
 # MAGIC %md ## Data pipelines
 # MAGIC
-# MAGIC 1. Follow the steps in [xx] to create your data pipeline experiments, logging each to MLflow in the application's MLflow Experiment that is defined in `../00_global_config`
-# MAGIC 2. Put a list of the MLflow *run names* in the `DATA_PIPELINE_EXPERIMENTS` variable
+# MAGIC 1. Follow the steps in http://ai-cookbook.io/nbs/5-hands-on-improve-quality-step-2-data-pipeline.html to implement a new data pipeline
+# MAGIC 2. Put a list of the resulting MLflow *run names* in the `DATA_PIPELINE_FIXES_RUN_NAMES` variable
 
 # COMMAND ----------
 
-DATA_PIPELINE_EXPERIMENTS = [] # Put data pipeline MLflow run names in this array
+DATA_PIPELINE_FIXES_RUN_NAMES = [] # Put data pipeline MLflow run names in this array
 
 
 # COMMAND ----------
 
-# MAGIC %md ## Chain configuration experiments
+# MAGIC %md ## Chain configuration
 # MAGIC
-# MAGIC Update the `CHAIN_CONFIG_EXPERIMENTS` dictionary to specify the different configurations that you want to evaluate.  Each configuration will be referred to by it's top level key.
+# MAGIC Update the `CHAIN_CONFIG_FIXES` dictionary to specify the different configurations that you want to evaluate.  Each configuration will be referred to by it's top level key.
 # MAGIC
 # MAGIC For example:
 # MAGIC
 # MAGIC ```
-# MAGIC CHAIN_CONFIG_EXPERIMENTS = {
+# MAGIC CHAIN_CONFIG_FIXES = {
 # MAGIC     "config_1": {...},
 # MAGIC     "config_2": {...}
 # MAGIC }
@@ -116,7 +116,7 @@ DATA_PIPELINE_EXPERIMENTS = [] # Put data pipeline MLflow run names in this arra
 # MAGIC
 # MAGIC > `baseline_chain_config = {'a': {'x': 1, 'y': 2}}`
 # MAGIC
-# MAGIC > `CHAIN_CONFIG_EXPERIMENTS['config_1'] = {'a': {'x': 4}}`
+# MAGIC > `CHAIN_CONFIG_FIXES['config_1'] = {'a': {'x': 4}}`
 # MAGIC
 # MAGIC The resulting configuration to evaluate will be:
 # MAGIC > `experiment_to_run = {'a': {'x': 4, 'y': 2}}`
@@ -125,7 +125,8 @@ DATA_PIPELINE_EXPERIMENTS = [] # Put data pipeline MLflow run names in this arra
 
 # COMMAND ----------
 
-CHAIN_CONFIG_EXPERIMENTS = {
+CHAIN_CONFIG_FIXES = {
+    # Below are a few example chain configuration fixes.  You can (and should) add your own fix based on the root cuase you have identified.
     "different_llm": {
         "databricks_resources": {
             # Replace this with another Databricks Model Serving endpoint name, such as an OpenAI External Model endpoint.
@@ -134,7 +135,7 @@ CHAIN_CONFIG_EXPERIMENTS = {
             "llm_endpoint_name": "databricks-meta-llama-3-70b-instruct",
         }
     },
-    "llm_params": {
+    "different_llm_params": {
         "llm_config": {
             # Parameters that control how the LLM responds.  For a full list of available parameters & what they impact, see https://docs.databricks.com/en/machine-learning/foundation-models/api-reference.html#chat-request
             "llm_parameters": {
@@ -219,18 +220,18 @@ Context: {context}""".strip(),
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## Chain code experiments
+# MAGIC ## Chain code
 # MAGIC
 # MAGIC Updating your chain code can be a bit more complex because some chain code changes introduce additional chain configuration parameters.  Adding a re-ranker is included as an example chain code experiment.
 # MAGIC
 # MAGIC To add a chain code experiment:
 # MAGIC
-# MAGIC 1. Add the chain file to `./chain_code_experiments`
-# MAGIC 2. Add the name of the chain file and any required configuration parameters to `CHAIN_CODE_EXPERIMENTS`. <br/><br/>
+# MAGIC 1. Add the chain file to `./chain_code_fixes`
+# MAGIC 2. Add the name of the chain file and any required configuration parameters to `CHAIN_CODE_FIXES`. <br/><br/>
 # MAGIC
 # MAGIC
 # MAGIC     ```
-# MAGIC     CHAIN_CODE_EXPERIMENTS = {
+# MAGIC     CHAIN_CODE_FIXES = {
 # MAGIC         "name_of_experiment": {
 # MAGIC             "chain_code_file": "file_name",
 # MAGIC             "chain_configuration_override": {
@@ -246,7 +247,7 @@ Context: {context}""".strip(),
 
 # COMMAND ----------
 
-CHAIN_CODE_EXPERIMENTS = {
+CHAIN_CODE_FIXES = {
     # "reranker": {
     #     # `single_turn_rag_chain_reranker` or `multi_turn_rag_chain_reranker`
     #     "chain_code_file": "single_turn_rag_chain_reranker", 
@@ -285,21 +286,25 @@ CHAIN_CODE_EXPERIMENTS = {
 
 # COMMAND ----------
 
-# # Load from spark
+# Load from the curated evaluation set's Delta Table
 
-# df = spark.table(EVALUATION_SET_FQN)
-# eval_df = df.toPandas()
-# display(eval_df)
+df = spark.table(EVALUATION_SET_FQN)
+eval_df = df.toPandas()
+display(eval_df)
 
 # COMMAND ----------
 
-# Load manually
+# If you do not have an evaluation set, and want to evaluate using a manually curated set of questions, you can use the structure below.
+
 eval_data = [
     {
-        # Optional, user specified to identify each row
-        "request_id": "your-request-id",
+        ### REQUIRED
         # Question that is asked by the user
         "request": "What is the difference between reduceByKey and groupByKey in Spark?",
+
+        ### OPTIONAL
+        # Optional, user specified to identify each row
+        "request_id": "your-request-id",
         # Optional: correct response to the question
         # If provided, Quality Lab can compute additional metrics.
         "expected_response": "There's no significant difference.",
@@ -315,13 +320,14 @@ eval_data = [
     }
 ]
 
-eval_df = pd.DataFrame(eval_data)
+# Uncomment this row to use the above data instead of your evaluation set
+# eval_df = pd.DataFrame(eval_data)
 
 # COMMAND ----------
 
-# MAGIC %md ## Run experiments
+# MAGIC %md ## "Compile" each fix into a runnable chain
 # MAGIC
-# MAGIC Create & run a set of experiments to run by merging each experiment's config with the baseline configuration.
+# MAGIC Create & run a set of "compiled fixes" to run by merging each fix's config with the baseline configuration.
 # MAGIC For example, if you have:
 # MAGIC
 # MAGIC > `baseline = {'a': {'x': 1, 'y': 2}}`
@@ -333,27 +339,21 @@ eval_df = pd.DataFrame(eval_data)
 
 # COMMAND ----------
 
-# MAGIC %md
-# MAGIC ### Collect all experiments
-
-# COMMAND ----------
-
-
 experiments_to_run = []
 
-for experiment_name, experiment_details in CHAIN_CODE_EXPERIMENTS.items():
+for experiment_name, experiment_details in CHAIN_CODE_FIXES.items():
     merged_config = merge_dicts(baseline_chain_config, experiment_details['chain_configuration_override'])
     code_file = experiment_details['chain_code_file']
     
     experiments_to_run.append({
         "experiment_name": experiment_name,
         "chain_config_override": merged_config,
-        "code_file": f"chain_code_experiments/{code_file}",
+        "code_file": f"chain_code_fixes/{code_file}",
         "data_pipeline_config": baseline_data_pipeline_config
 
     })
 
-for run_name in DATA_PIPELINE_EXPERIMENTS:
+for run_name in DATA_PIPELINE_FIXES_RUN_NAMES:
     # print(experiment)
     pipeline_run = get_mlflow_run(experiment_name=MLFLOW_EXPERIMENT_NAME, run_name=run_name)
     pipeline_chain_config_override = mlflow.artifacts.load_dict(f"{pipeline_run.info.artifact_uri}/chain_config.json")
@@ -369,7 +369,7 @@ for run_name in DATA_PIPELINE_EXPERIMENTS:
         "data_pipeline_config": data_pipeline_config
     })
 
-for experiment_name, config_override in CHAIN_CONFIG_EXPERIMENTS.items():
+for experiment_name, config_override in CHAIN_CONFIG_FIXES.items():
     merged_config = merge_dicts(baseline_chain_config, config_override)
     experiments_to_run.append({
         "experiment_name": experiment_name,
@@ -382,7 +382,7 @@ for experiment_name, config_override in CHAIN_CONFIG_EXPERIMENTS.items():
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ### Run all experiments
+# MAGIC ## Run evaluation of each "compiled" fix
 
 # COMMAND ----------
 
@@ -428,16 +428,9 @@ for experiment in experiments_to_run:
 
 # COMMAND ----------
 
-# MAGIC %md # Review evaluation results
+# MAGIC %md # Decide the best one
 # MAGIC
-# MAGIC Now, we will decide the best chain based several metrics & deploy it to the Review App to get stakeholder input.  If multiple chains are equally good, one of them is selected.
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC ## Identify the best chain
-# MAGIC
-# MAGIC Identify the best chain based on which chain "wins" the most number of times across each `metrics_to_use`.
+# MAGIC Identify the best chain based on which chain "wins" the most number of times across each `metrics_to_use`.  If multiple chains are equally good, one of them is selected.
 
 # COMMAND ----------
 
@@ -493,7 +486,7 @@ print(f"Best chain is: {winner}")
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC # Deploy the best chain.
+# MAGIC # Deploy the best one
 # MAGIC
 # MAGIC This step will BOTH:
 # MAGIC 1. Deploy the winning chain to the Review App for stakeholder review

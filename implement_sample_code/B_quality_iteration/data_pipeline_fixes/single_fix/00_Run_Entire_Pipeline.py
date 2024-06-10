@@ -44,3 +44,7 @@ dbutils.notebook.run("03_chunk_docs", timeout_seconds=0)
 # COMMAND ----------
 
 dbutils.notebook.run("04_vector_index", timeout_seconds=0)
+
+# COMMAND ----------
+
+print(f"MLflow Run name to use in the evaluation notebook: {mlflow_run_name}")
