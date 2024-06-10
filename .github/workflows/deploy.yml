@@ -5,7 +5,8 @@ on:
   # Trigger the deploy on push to main branch
   push:
     branches:
-      - dl/convert-to-rag-guide
+      - "dl/convert-to-rag-guide"
+      - "main"
 
 env:
   BASE_URL: /${{ github.event.repository.name }}
