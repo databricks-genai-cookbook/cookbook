@@ -72,10 +72,6 @@ request_log_table_name = f"{inference_table_catalog}.{inference_table_schema}.`{
 print(f"Assessment logs: {assessment_log_table_name}")
 print(f"Request logs: {request_log_table_name}")
 
-### TEMP### TEMP### TEMP### TEMP### TEMP### TEMP### TEMP
-assessment_log_table_name = "rag.cookbook_smoke_test.`rag_studio-databricks_customer_support_bot_payload_assessment_logs`"
-request_log_table_name = "rag.cookbook_smoke_test.`rag_studio-databricks_customer_support_bot_payload_request_logs`"
-### TEMP### TEMP### TEMP### TEMP### TEMP### TEMP### TEMP### TEMP### TEMP### TEMP
 
 assessment_log_df = _dedup_assessment_log(spark.table(assessment_log_table_name))
 request_log_df = spark.table(request_log_table_name)
@@ -102,7 +98,15 @@ requests_with_feedback_df.columns
 
 # COMMAND ----------
 
-display(requests_with_feedback_df[["request", "request_id", "expected_response", "expected_retrieved_context", "source_user", "source_tag", "trace"]])
+display(requests_with_feedback_df.select(
+    F.col("request_id"),
+    F.col("request"),
+    F.col("response"),
+    F.col("trace"),
+    F.col("expected_response"),
+    F.col("expected_retrieved_context"),
+    F.col("is_correct"),
+))
 
 # COMMAND ----------
 
@@ -113,4 +117,4 @@ display(requests_with_feedback_df[["request", "request_id", "expected_response",
 
 eval_set = requests_with_feedback_df[["request", "request_id", "expected_response", "expected_retrieved_context", "source_user", "source_tag"]]
 
-spark.createDataFrame(eval_set).write.format("delta").saveAsTable(EVALUATION_SET_FQN)
+eval_set.write.format("delta").saveAsTable(EVALUATION_SET_FQN)

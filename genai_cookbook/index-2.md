@@ -4,6 +4,8 @@ title: Databricks Generative AI Cookbook
 
 # Databricks Generative AI Cookbook
 
+**TLDR;** this cookbook and its sample code will take you from initial POC to high-quality production-ready application using [Mosaic AI Quality Lab](https://docs.databricks.com/generative-ai/agent-evaluation/index.html) and [Mosaic AI Agent Framework](https://docs.databricks.com/generative-ai/retrieval-augmented-generation.html) on the Databricks platform.
+
 The Databricks Generative AI Cookbook is a definitive how-to guide for building *high-quality* generative AI applications. *High-quality* applications are applications that:
 1. **Accurate:** provide correct responses
 2. **Safe:** do not deliver harmful or insecure responses
@@ -11,15 +13,18 @@ The Databricks Generative AI Cookbook is a definitive how-to guide for building 
 
 Developed in partnership with Mosaic AI's research team, this cookbook lays out Databricks best-practice development workflow for building high-quality RAG apps: *evaluation driven development.* It outlines the most relevant knobs & approaches that can increase RAG application quality and provides a comprehensive repository of sample code implementing those techniques. 
 
-**TLDR;** this cookbook and its sample code will take you from initial POC to high-quality production-ready application using [Mosaic AI Quality Lab](https://docs.databricks.com/generative-ai/agent-evaluation/index.html) and [Mosaic AI Agent Framework](https://docs.databricks.com/generative-ai/retrieval-augmented-generation.html) on the Databricks platform.
-
 ```{important}
 - Only have 10 minutes and want to see a demo of Mosaic AI Agent Framework & Quality lab?  Start [here](https://DBDEMO).
 - Want to hop into code and deploy a RAG POC using your data?  Start [here](./nbs/6-implement-overview.md).
 - Don't have any data, but want to deploy a sample RAG application?  Start here.
 ```
 
-> This first release focuses on retrieval-augmented generation (RAG).  Future releases will include the other popular generative AI techniques: agents & function calling, prompt engineering, fine tuning, and pre-training.
+```{image} images/index/dbxquality.png
+:align: center
+```
+
+<br/>
+
 
 ```{image} images/5-hands-on/review_app2.gif
 :align: center
@@ -27,7 +32,14 @@ Developed in partnership with Mosaic AI's research team, this cookbook lays out 
 
 <br/>
 
+This cookbook is intended for use with the Databricks platform.  Specifically:
+- [Mosaic AI Agent Framework](https://docs.databricks.com/generative-ai/retrieval-augmented-generation.html) which provides a fast developer workflow with enterprise-ready LLMops & governance
+- [Mosaic AI Quality Lab](https://docs.databricks.com/generative-ai/agent-evaluation/index.html) which provides reliable, quality measurement using proprietary AI-assisted LLM judges to measure quality metrics that are powered by human feedback collected through an intuitive web-based chat UI
+
+
 # Retrieval-augmented generation (RAG)
+
+> This first release focuses on retrieval-augmented generation (RAG).  Future releases will include the other popular generative AI techniques: agents & function calling, prompt engineering, fine tuning, and pre-training.
 
 The RAG cookbook is divided into 2 sections:
 1. [**Learn:**](#learn) Understand the required components of a production-ready, high-quality RAG application

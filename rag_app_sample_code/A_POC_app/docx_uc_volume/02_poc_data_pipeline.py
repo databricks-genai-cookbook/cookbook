@@ -11,7 +11,7 @@
 
 # COMMAND ----------
 
-# MAGIC %pip install -qqqq -U pypandoc_binary==1.13 databricks-vectorsearch transformers==4.41.1 torch==2.3.0 tiktoken==0.7.0 langchain-text-splitters==0.2.0 mlflow
+# MAGIC %pip install -qqqq -U pypandoc_binary==1.13 databricks-vectorsearch transformers==4.41.1 torch==2.3.0 tiktoken==0.7.0 langchain-text-splitters==0.2.0  mlflow mlflow-skinny
 
 # COMMAND ----------
 
@@ -94,6 +94,24 @@ def get_table_url(table_fqdn):
 
 # MAGIC %run ./00_config
 
+
+# COMMAND ----------
+
+mlflow.end_run()
+# Start MLflow logging
+run = mlflow.start_run(run_name=POC_DATA_PIPELINE_RUN_NAME)
+
+# Tag the run
+mlflow.set_tag("type", "data_pipeline")
+
+# Set the parameters
+mlflow.log_params(_flatten_nested_params({"data_pipeline": data_pipeline_config}))
+mlflow.log_params(_flatten_nested_params({"destination_tables": destination_tables_config}))
+
+# Log the configs as artifacts for later use
+mlflow.log_dict(destination_tables_config, "destination_tables_config.json")
+mlflow.log_dict(data_pipeline_config, "data_pipeline_config.json")
+
 # COMMAND ----------
 
 # MAGIC %md TODO: verify that the catalog & vector index exist
@@ -143,6 +161,7 @@ if raw_files_df.count() == 0:
     raise Exception(f"`{SOURCE_PATH}` does not contain any files.")
 
 tag_delta_table(destination_tables_config["raw_files_table_name"], data_pipeline_config)
+mlflow.log_input(mlflow.data.load_delta(table_name=destination_tables_config.get("raw_files_table_name")), context="raw_files")
 
 # COMMAND ----------
 
@@ -257,6 +276,7 @@ print(f"Parsed {parsed_files_df.count()} documents.")
 display(parsed_files_df)
 
 tag_delta_table(destination_tables_config["parsed_docs_table_name"], data_pipeline_config)
+mlflow.log_input(mlflow.data.load_delta(table_name=destination_tables_config.get("parsed_docs_table_name")), context="parsed_docs")
 
 # COMMAND ----------
 
@@ -410,6 +430,7 @@ print(f"Produced a total of {chunked_files_df.count()} chunks.")
 display(chunked_files_df)
 
 tag_delta_table(destination_tables_config["chunked_docs_table_name"], data_pipeline_config)
+mlflow.log_input(mlflow.data.load_delta(table_name=destination_tables_config.get("chunked_docs_table_name")), context="chunked_docs")
 
 # COMMAND ----------
 
@@ -483,3 +504,21 @@ print(f"Gold Delta Table w/ chunked files: {get_table_url(destination_tables_con
 
 # DBTITLE 1,Testing the Index
 index.similarity_search(columns=["chunked_text", "chunk_id", "path"], query_text="your query text")
+
+# COMMAND ----------
+
+chain_config = {
+    "databricks_resources": {
+        "vector_search_endpoint_name": VECTOR_SEARCH_ENDPOINT,
+    },
+    "retriever_config": {
+        "vector_search_index": destination_tables_config[
+            "vectorsearch_index_name"
+        ],
+        "data_pipeline_tag": "poc",
+    }
+}
+
+mlflow.log_dict(chain_config, "chain_config.json")
+
+mlflow.end_run()

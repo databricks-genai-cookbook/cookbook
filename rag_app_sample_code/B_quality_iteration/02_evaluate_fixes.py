@@ -416,7 +416,7 @@ for experiment in experiments_to_run:
         eval_results = mlflow.evaluate(
             data=eval_df,
             model=logged_chain_info.model_uri,
-            model_type="databricks-agents",
+            model_type="databricks-agent",
         )
 
         # Save results for later analysis

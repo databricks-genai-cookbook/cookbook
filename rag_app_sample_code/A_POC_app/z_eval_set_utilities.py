@@ -6,7 +6,7 @@ import mlflow
 import mlflow.entities as mlflow_entities
 
 from pyspark import sql
-from pyspark.sql import functions as F
+from pyspark.sql import functions as F, types as T
 from pyspark.sql.window import Window
 
 from databricks import agents
@@ -140,19 +140,23 @@ def attach_ground_truth(request_log_df, deduped_assessment_log_df):
 
 # COMMAND ----------
 
+_EXPECTED_RETRIEVAL_CONTEXT_SCHEMA = T.ArrayType(T.StructType([T.StructField("doc_uri", T.StringType()), T.StructField("content", T.StringType())]))
+
 def extract_retrieved_chunks_from_trace(trace_str: str) -> List[Mapping[str, str]]:
   """Helper to extract the retrieved chunks from a trace string"""
   trace = mlflow_entities.Trace.from_json(trace_str)
   chunks = traces.extract_retrieval_context_from_trace(trace)
   return [{"doc_uri": chunk.doc_uri, "content": chunk.content} for chunk in chunks]
 
+@F.udf(_EXPECTED_RETRIEVAL_CONTEXT_SCHEMA)
 def construct_expected_retrieval_context(trace_str: Optional[str], chunk_at_i_relevance: Optional[List[str]]) -> Optional[List[Mapping[str, str]]]:
   """Helper to construct the expected retrieval context. Any retrieved chunks that are not relevant are dropped."""
   if chunk_at_i_relevance is None or trace_str is None: 
     return None
   retrieved_chunks = extract_retrieved_chunks_from_trace(trace_str)
-  return [chunk for chunk, rating in zip(retrieved_chunks, chunk_at_i_relevance) if rating == "true"]
-
+  expected_retrieval_context = [chunk for chunk, rating in zip(retrieved_chunks, chunk_at_i_relevance) if rating == "true"]
+  return expected_retrieval_context if len(expected_retrieval_context) else None
+# =================================
 
 
 def identify_potential_eval_set_records(raw_requests_with_feedback_df):
@@ -196,20 +200,17 @@ def identify_potential_eval_set_records(raw_requests_with_feedback_df):
   ).drop(_RETRIEVAL_ASSESSMENT)
 
   requests_with_feedback_df = requests_with_feedback_df.withColumnRenamed("databricks_request_id", "request_id")
-  # Convert the pyspark dataframe to a pandas dataframe
-  requests_with_feedback_pdf = requests_with_feedback_df.toPandas()
-
-  # Construct the expected retrieval context
-  requests_with_feedback_pdf["expected_retrieved_context"] = requests_with_feedback_pdf.apply(
-    lambda row: construct_expected_retrieval_context(row["trace"], row["chunk_at_i_relevance"]), axis=1
+  
+  # Add the expected retrieved context column
+  requests_with_feedback_df = requests_with_feedback_df.withColumn(
+    "expected_retrieved_context", construct_expected_retrieval_context(F.col("trace"), F.col("chunk_at_i_relevance"))
   )
-  return requests_with_feedback_pdf
-
+  return requests_with_feedback_df
+  
 
 # COMMAND ----------
 
 def create_potential_evaluation_set(request_log_df, assessment_log_df):
     raw_requests_with_feedback_df = attach_ground_truth(request_log_df, assessment_log_df)
-    requests_with_feedback_pdf = identify_potential_eval_set_records(raw_requests_with_feedback_df)
-
-    return requests_with_feedback_pdf
+    requests_with_feedback_df = identify_potential_eval_set_records(raw_requests_with_feedback_df)
+    return requests_with_feedback_df

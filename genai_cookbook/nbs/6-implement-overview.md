@@ -32,7 +32,7 @@ Follow these steps to load the sample code to your Databricks workspace and conf
     ```
 <br/>
 
-2. Open the [`00_global_config`](REPO_URL/implement_sample_code/00_global_config.py) Notebook and adjust the settings there.
+2. Open the [`rag_app_sample_code/00_global_config`](REPO_URL/implement_sample_code/00_global_config.py) Notebook and adjust the settings there.
 
     ```python
     # The name of the RAG application.  This is used to name the chain's UC model and prepended to the output Delta Tables + Vector Indexes
